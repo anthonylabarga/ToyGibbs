@@ -22,9 +22,9 @@ rToyGibbs <- function ( n, alpha )
 
 CompRToyGibbs <- cmpfun(rToyGibbs)
 
-res <- microbenchmark(rToyGibbs( 1000, 0.6 ),
-                      CompRToyGibbs( 1000, 0.6 ),
-                      times=1000)
+results <- microbenchmark(rToyGibbs( 2000, 0.6 ),
+                      CompRToyGibbs( 2000, 0.6 ),
+                      times = 500)
 
 windows()
-autoplot(res)
+autoplot(results)
