@@ -5,6 +5,7 @@
 library( compiler )
 library( microbenchmark )
 library( ggplot2 )
+library( Rcpp )
 
 rToyGibbs <- function ( n, alpha )
 {
@@ -22,9 +23,12 @@ rToyGibbs <- function ( n, alpha )
 
 CompRToyGibbs <- cmpfun(rToyGibbs)
 
-results <- microbenchmark(rToyGibbs( 2000, 0.6 ),
-                      CompRToyGibbs( 2000, 0.6 ),
-                      times = 500)
+sourceCpp("CGibbs.cpp")
+
+results <- microbenchmark(rToyGibbs( 10000, 0.6 ),
+                      CompRToyGibbs( 10000, 0.6 ),
+                      Gibbs_Rcpp( 10000, 0.6 ),
+                      times = 1000)
 
 windows()
 autoplot(results)
